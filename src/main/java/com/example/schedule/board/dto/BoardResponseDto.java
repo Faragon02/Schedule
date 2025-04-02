@@ -29,10 +29,10 @@ public class BoardResponseDto {
         this.title = board.getTitle();
         this.contents = board.getContents();
         this.writer = board.getWriter();
-        this.createdAt = getCreatedAt();
-        this.modifiedAt = getModifiedAt();
+        this.createdAt =  board.getCreatedAt().toString();
+        this.modifiedAt = board.getModifiedAt().toString();
     }
     public static  BoardResponseDto todo(Board board){
-        return new BoardResponseDto(board.getId(), board.getTitle(), board.getContents(),board.getWriter());
+        return new BoardResponseDto(board);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.schedule.board.entity;
 
+import com.example.schedule.members.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -22,6 +23,10 @@ public class Board extends BaseEntity {
     @Column(nullable = false)
     private  String writer;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     //빈 객체가 생성해야하는 이유???
     public Board() {
 
@@ -37,5 +42,9 @@ public class Board extends BaseEntity {
 
     public void update(String contents){
         this.contents = contents;
+    }
+
+    public void setMember(Member member){
+        this.member = member;
     }
 }

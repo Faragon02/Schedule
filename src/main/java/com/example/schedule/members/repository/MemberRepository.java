@@ -21,4 +21,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Does not exist username = " + username));
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.schedule.members.controller;
 
+import com.example.schedule.members.dto.GetResponseDto;
 import com.example.schedule.members.dto.SignUpRequestDto;
 import com.example.schedule.members.dto.SignUpResponseDto;
 import com.example.schedule.members.dto.UpdatePasswordRequestDto;
@@ -39,7 +40,7 @@ public class MemberController {
     }
     //유저 조회
     @GetMapping("/{id}")
-    public ResponseEntity<SignUpResponseDto> memberFindById(@PathVariable Long id){
+    public ResponseEntity<GetResponseDto> memberFindById(@PathVariable Long id){
 
         return new ResponseEntity<>(memberService.memberFindByIdService(id), HttpStatus.OK);
     }

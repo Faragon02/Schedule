@@ -1,5 +1,6 @@
 package com.example.schedule.members.service;
 
+import com.example.schedule.members.dto.GetResponseDto;
 import com.example.schedule.members.dto.SignUpRequestDto;
 import com.example.schedule.members.dto.SignUpResponseDto;
 import com.example.schedule.members.entity.Member;
@@ -21,6 +22,15 @@ public class MemberService {
         Member saveMember =memberRepository.save(member);
         return new SignUpResponseDto(saveMember.getId(), saveMember.getUsername());
     }
+
+
+    public GetResponseDto memberFindByIdService(Long id){
+
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+
+        return new GetResponseDto(findMember);
+    }
+
     @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword){
         Member findMember = memberRepository.findByIdOrElseThrow(id);
@@ -30,10 +40,5 @@ public class MemberService {
         }
         findMember.updatePassword(newPassword);
     }
-    public SignUpResponseDto memberFindByIdService(Long id){
 
-        Member findMember = memberRepository.findByIdOrElseThrow(id);
-
-        return new SignUpResponseDto(findMember.getId(), findMember.getUsername());
-    }
 }
