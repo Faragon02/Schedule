@@ -10,7 +10,7 @@ public class GetResponseDto {
 
     private final  Long id;
 
-    private final String username;
+    private final String userName;
 
     private final String email;
 
@@ -20,7 +20,7 @@ public class GetResponseDto {
 
     public GetResponseDto(Member member) {
         this.id = member.getId();
-        this.username = member.getUsername();
+        this.userName = member.getUserName();
         this.email = member.getEmail();
         this.createdAt = member.getCreatedAt().toString();
         this.modifiedAt = member.getModifiedAt().toString();

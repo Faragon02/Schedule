@@ -4,14 +4,14 @@ import lombok.Getter;
 
 @Getter
 public class SignUpRequestDto {
-    private final String username;
+    private final String userName;
 
     private final String password;
 
     private final String email;
 
-    public SignUpRequestDto(String username, String password, String email) {
-        this.username = username;
+    public SignUpRequestDto(String userName, String password, String email) {
+        this.userName = userName;
         this.password = password;
         this.email = email;
     }
