@@ -1,9 +1,8 @@
 package com.example.schedule.members.controller;
 
 import com.example.common.Const;
-import com.example.schedule.members.dto.LoginRequestDto;
-import com.example.schedule.members.dto.LoginResponseDto;
-import com.example.schedule.members.service.MemberService;
+import com.example.schedule.members.dto.login.LoginRequestDto;
+import com.example.schedule.members.dto.login.LoginResponseDto;
 import com.example.schedule.members.service.UserService;
 import jakarta.servlet.http.*;
 import jakarta.validation.Valid;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

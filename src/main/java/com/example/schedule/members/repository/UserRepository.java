@@ -8,11 +8,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<Member, Long> {
-    Optional<Member> findMemberByLogin(String username, String password);
+    Optional<Member> findByUserName(String userName);
 
-    default Member findMemberByLoginOrElseTrow(String username, String password){
-        return findMemberByLogin(username, password).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Does not exist username = " + username));
-    }
+   default Member findByLoginOrElseTrow(String userName, String password){
+       return  findByUserName( userName)
+               .filter(Member -> Member.getUserName().equals(userName) && Member.getPassword().equals(password))
+               .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist username = " + userName));
+   }
 }

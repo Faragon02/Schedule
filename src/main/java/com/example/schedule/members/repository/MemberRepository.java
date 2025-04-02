@@ -8,7 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Optional<Member> findMemberByUsername(String username);
+    Optional<Member> findMemberByUserName(String userName);
 
     default Member findByIdOrElseThrow(Long id){
         return findById(id).orElseThrow(() -> new ResponseStatusException(
@@ -17,7 +17,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
         );
     }
     default Member findMemberByUsernameOrElseTrow(String username){
-        return findMemberByUsername(username).orElseThrow(
+        return findMemberByUserName(username).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Does not exist username = " + username));
     }

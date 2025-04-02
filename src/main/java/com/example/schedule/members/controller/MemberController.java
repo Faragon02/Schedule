@@ -1,20 +1,14 @@
 package com.example.schedule.members.controller;
 
 import com.example.schedule.members.dto.GetResponseDto;
-import com.example.schedule.members.dto.SignUpRequestDto;
-import com.example.schedule.members.dto.SignUpResponseDto;
+import com.example.schedule.members.dto.sign.SignUpRequestDto;
+import com.example.schedule.members.dto.sign.SignUpResponseDto;
 import com.example.schedule.members.dto.UpdatePasswordRequestDto;
-import com.example.schedule.members.entity.Member;
-import com.example.schedule.members.repository.MemberRepository;
 import com.example.schedule.members.service.MemberService;
-import jakarta.persistence.Table;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.parser.Entity;
 
 @RestController
 @RequestMapping("/users")
@@ -33,11 +27,11 @@ public class MemberController {
                 dto.getUsername(),
                 dto.getPassword(),
                 dto.getEmail()
-
         );
 
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.OK);
     }
+
     //유저 조회
     @GetMapping("/{id}")
     public ResponseEntity<GetResponseDto> memberFindById(@PathVariable Long id){
@@ -58,7 +52,7 @@ public class MemberController {
     //유저 정보 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> memberDelete(@PathVariable Long id){
-         memberDelete(id);
+         memberService.memberDeleteService(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

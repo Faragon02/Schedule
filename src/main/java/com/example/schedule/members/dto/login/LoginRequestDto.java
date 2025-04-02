@@ -1,9 +1,8 @@
-package com.example.schedule.members.dto;
+package com.example.schedule.members.dto.login;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.antlr.v4.runtime.misc.NotNull;
 
 //implementation 'org.springframework.boot:spring-boot-starter-validation' 설치 할것.
 
