@@ -1,6 +1,6 @@
 package com.example.schedule.domain.schedule.dto;
 
-import com.example.schedule.domain.schedule.entity.Board;
+import com.example.schedule.domain.schedule.entity.Schedule;
 import lombok.Getter;
 
 @Getter
@@ -19,15 +19,15 @@ public class ScheduleResponseDto {
         this.writer = writer;
     }
 
-    public ScheduleResponseDto(Board board) {
-        this.Id = board.getId();
-        this.title = board.getTitle();
-        this.contents = board.getContents();
-        this.writer = board.getWriter();
-        this.createdAt =  board.getCreatedAt().toString();
-        this.modifiedAt = board.getModifiedAt().toString();
+    public ScheduleResponseDto(Schedule schedule) {
+        this.Id = schedule.getId();
+        this.title = schedule.getTitle();
+        this.contents = schedule.getContents();
+        this.writer = schedule.getMember().getUserName();
+        this.createdAt =  schedule.getCreatedAt().toString();
+        this.modifiedAt = schedule.getModifiedAt().toString();
     }
-    public static ScheduleResponseDto todo(Board board){
+    public static ScheduleResponseDto todo(Schedule board){
         return new ScheduleResponseDto(board);
     }
 }

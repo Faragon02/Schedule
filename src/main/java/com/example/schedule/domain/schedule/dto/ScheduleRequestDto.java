@@ -12,12 +12,8 @@ public class ScheduleRequestDto {
     @NotBlank(message = "내용을 입력하세요")
     private String contents;
 
-    private String writer;
-
-    public ScheduleRequestDto(String title, String contents, String writer) {
-
+    public ScheduleRequestDto(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.writer = writer;
     }
 }
