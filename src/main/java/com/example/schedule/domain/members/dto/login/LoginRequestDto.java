@@ -17,7 +17,6 @@ public class LoginRequestDto {
 
     //입력한 패스워드
     @NotBlank(message = "비밀 번호에 공백이 포함될 수 없습니다.")
-    @Min(value = 8, message = "8~ 20자 사이 입력해주세요.")
-    @Max(value = 20, message = "8~ 20자 사이 입력해주세요.")
+    @Size(min= 8 , max = 20, message = "8~ 20자 사이 입력해주세요.")
     private final String password;
 }

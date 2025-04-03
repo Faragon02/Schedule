@@ -10,8 +10,7 @@ public class SignUpRequestDto {
     private String userName;
 
     @NotBlank(message = "패스워드를 입력하세요")
-    @Min(value = 8, message = "8~ 20자 사이 입력해주세요.")
-    @Max(value = 20, message = "8~ 20자 사이 입력해주세요.")
+    @Size(min= 8 , max = 20, message = "8~ 20자 사이 입력해주세요.")
     private String password;
 
     @NotBlank(message = "이메일에 공백이 포함될 수 없습니다.")
