@@ -35,14 +35,16 @@ public class MemberController {
             HttpServletRequest request
     ){
 
-        LoginResponseDto responseDto = memberService.login(dto.getUserName(), dto.getPassword());
+        LoginResponseDto responseDto = memberService.login(dto.getEmail(), dto.getPassword());
         if(responseDto.getId() ==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error");
         }
         //세션
         HttpSession session = request.getSession();
 
-        session.setAttribute(Const.LOGIN_USER,  String.valueOf(responseDto.getId()));
+        // session.setAttribute(Const.LOGIN_USER, String.valueOf(responseDto));
+
+        session.setAttribute(Const.LOGIN_USER, responseDto);
         return ResponseEntity.ok(new LoginResponseDto(responseDto.getId() ));
     }
 
@@ -62,7 +64,10 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    //유저 추가
+    /*
+     * 2005.04.03
+     * 유저 추가
+     *  */
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> memberSignUp( @RequestBody @Valid SignUpRequestDto dto){
 
@@ -72,31 +77,47 @@ public class MemberController {
                 dto.getPassword(),
                 dto.getEmail()
         );
-        return new ResponseEntity<>(signUpResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(signUpResponseDto,HttpStatus.OK);
     }
 
-    //유저 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<GetResponseDto> memberFindById(@PathVariable Long id){
+    /*
+     * 2005.04.03
+     * 유저 조회
+     *  */
+    @GetMapping
+    public ResponseEntity<GetResponseDto> memberFindById(HttpSession session){
 
-        return new ResponseEntity<>(memberService.memberFindByIdService(id), HttpStatus.OK);
+        Long userId = memberService.getUserId( (LoginResponseDto) session.getAttribute(Const.LOGIN_USER));
+        return new ResponseEntity<>(memberService.memberFindByIdService(userId), HttpStatus.OK);
     }
-    //유저 비밀 번호 변경
-    @PatchMapping("/{id}")
+    /*
+     * 2005.04.03
+     * 유저 비밀번호 변경
+     *  */
+    @PatchMapping
     public ResponseEntity<Void> memberUpdate(
-            @PathVariable Long id,
+            HttpSession session,
             @RequestBody UpdatePasswordRequestDto dto){
-            memberService.updatePassword(id, dto.getOldPassword(), dto.getNewPassword());
+
+//        String c  = (String)session.getAttribute(Const.LOGIN_USER);
+//        System.out.println(c);
+        Long userId = memberService.getUserId( (LoginResponseDto) session.getAttribute(Const.LOGIN_USER));
+        memberService.updatePassword(userId , dto.getOldPassword(), dto.getNewPassword());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //유저 정보 삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> memberDelete(@PathVariable Long id){
-         memberService.memberDeleteService(id);
+    /*
+     * 2005.04.03
+     * 유저 정보 삭제
+     *  */
+    @DeleteMapping
+    public ResponseEntity<Void> memberDelete( HttpSession session,
+                                              @RequestParam String password){
+
+        Long userId = memberService.getUserId( (LoginResponseDto) session.getAttribute(Const.LOGIN_USER));
+         memberService.memberDeleteService(userId, password );
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }

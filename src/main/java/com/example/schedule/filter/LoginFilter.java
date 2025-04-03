@@ -14,7 +14,7 @@ import java.io.IOException;
 public class LoginFilter implements Filter {
 
 
-    private static final String[] WHITE_LIST= {"/", "/users/Login", "/users/signup"};
+    private static final String[] WHITE_LIST= {"/","/users/login", "/users/signup"};
 
     @Override
     public void doFilter(ServletRequest request,
@@ -26,10 +26,11 @@ public class LoginFilter implements Filter {
         String requestURI = httpRequest.getRequestURI();
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        log.info("로그인 필터 로직 실행");
 
-        //White_List 포함된 경우 true-> false, 안된경우 해당 로직을 수행
+
+        //White_List 포함된 경우 로직 수행하지 않음, 안된경우 해당 로직을 수행
         if(!isWhiteList(requestURI)){
+            System.out.println(requestURI); //check
             HttpSession httpSession =  httpRequest.getSession(false);
             if(httpSession == null || httpSession.getAttribute(Const.LOGIN_USER) == null){
                 throw new RuntimeException("로그인 해주세요.");

@@ -21,6 +21,11 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String userName;
 
+    public Member(String password, String email) {
+        this.password = password;
+        this.email = email;
+    }
+
     //유저 패스워드
     @Column(nullable = false)
     private String password;
@@ -38,10 +43,5 @@ public class Member extends BaseEntity {
     public void updatePassword(String password) {
         this.password = password;
     }
-    //Login 전용
-    public Member(Long id, String userName, String password) {
-        this.Id = id;
-        this.userName = userName;
-        this.password = password;
-    }
+
 }

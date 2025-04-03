@@ -1,6 +1,7 @@
 package com.example.schedule.domain.members.repository;
 
 import com.example.schedule.domain.members.entity.Member;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,22 +10,23 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findMemberByUserName(String userName);
+    Optional<Member> findMemberByEmail(String email);
 
     default Member findByIdOrElseThrow(Long id){
-        return findById(id).orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Does not exist id = " + id)
+        return findById(id).orElseThrow(() -> new EntityNotFoundException("요청한 정보를 찾을 수 없습니다.")
         );
     }
     default Member findMemberByUsernameOrElseTrow(String userName){
         return findMemberByUserName(userName).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Does not exist username = " + userName));
+                () -> new EntityNotFoundException("요청한 정보를 찾을 수 없습니다."));
     }
 
-    default Member findByLoginOrElseTrow(String userName, String password){
-        return  findMemberByUserName( userName)
-                .filter(Member -> Member.getUserName().equals(userName) && Member.getPassword().equals(password))
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist username = " + userName));
+    default Member findByLoginOrElseTrow(String email, String password){
+        return findMemberByEmail(email).filter(Member -> Member.getEmail().equals(email) && Member.getPassword().equals(password))
+                .orElseThrow(()-> new EntityNotFoundException("요청한 정보를 찾을 수 없습니다."));
+    }
+
+    default boolean isExist(String email){
+        return findMemberByEmail( email).stream().anyMatch(member -> member.getEmail().equals(email));
     }
 }
