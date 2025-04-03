@@ -1,6 +1,7 @@
 package com.example.schedule.domain.members.service;
 
 import com.example.schedule.common.Const;
+import com.example.schedule.config.PasswordEncoder;
 import com.example.schedule.domain.members.dto.GetResponseDto;
 import com.example.schedule.domain.members.dto.login.LoginResponseDto;
 import com.example.schedule.domain.members.dto.sign.SignUpResponseDto;
@@ -23,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
+    private final PasswordEncoder passwordEncoder;
 
     /*
      *2025 /04 /04
@@ -57,7 +58,7 @@ public class MemberService {
      * */
     public SignUpResponseDto memberSignUpService( String userName, String password, String email){
 
-       Member member = new Member(userName, password, email);
+       Member member = new Member(userName,passwordEncoder.encode(password), email);
 
         if(memberRepository.isExist(email)){
             throw new DuplicateKeyException("이미 가입된 정보입니다.");
@@ -88,7 +89,7 @@ public class MemberService {
     public void updatePassword(Long id, String oldPassword, String newPassword){
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
-        if(!findMember.getPassword().equals(oldPassword)){
+        if(!passwordEncoder.matches(findMember.getPassword(),oldPassword)){
             throw new PasswordMismatchException( "기존 비밀 번호와 다릅니다.");
         }
         findMember.updatePassword(newPassword);
@@ -96,7 +97,7 @@ public class MemberService {
 
     public void memberDeleteService(Long id, String password){
         Member findMember = memberRepository.findByIdOrElseThrow(id);
-        if(!findMember.getPassword().equals(password)){
+        if(!passwordEncoder.matches(findMember.getPassword(),password)){
             throw new BadCredentialsException("입력한 패스워드와 다릅니다.");
         }
         memberRepository.delete(findMember);
