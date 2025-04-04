@@ -50,12 +50,12 @@ public class GlobalExceptionHandler {
     //비밀번호 불일치
     @ExceptionHandler(PasswordMismatchException.class)
     public ResponseEntity<String> handleIllegalArgumentException(PasswordMismatchException ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("[400 Bad Request]:" + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("[403 Bad Request]:" + ex.getMessage());
     }
    //로그인 하세요
    @ExceptionHandler(NotAuthenticatedException.class)
    public ResponseEntity<String> handleNotAuthenticatedException(NotAuthenticatedException ex){
-       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("[400 Bad Request]:" + ex.getMessage());
+       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("[404 Not Found]:" + ex.getMessage());
    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -70,8 +70,4 @@ public class GlobalExceptionHandler {
     private ResponseEntity<String> handleResponseStatusException(ResponseStatusException ex){
         return  new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
-
-
-
-
 }
