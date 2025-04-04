@@ -1,6 +1,7 @@
 package com.example.schedule.filter;
 
 import com.example.schedule.common.Const;
+import com.example.schedule.exception.NotAuthenticatedException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,7 +34,7 @@ public class LoginFilter implements Filter {
             System.out.println(requestURI); //check
             HttpSession httpSession =  httpRequest.getSession(false);
             if(httpSession == null || httpSession.getAttribute(Const.LOGIN_USER) == null){
-                throw new RuntimeException("로그인 해주세요.");
+                throw new NotAuthenticatedException("로그인 해주세요");
             }
         }
 

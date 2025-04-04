@@ -1,6 +1,7 @@
 package com.example.schedule.domain.members.controller;
 
 import com.example.schedule.common.Const;
+import com.example.schedule.config.PasswordEncoder;
 import com.example.schedule.domain.members.dto.GetResponseDto;
 import com.example.schedule.domain.members.dto.login.LoginRequestDto;
 import com.example.schedule.domain.members.dto.login.LoginResponseDto;
@@ -25,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class MemberController {
 
     private final MemberService memberService;
+    //자세한 기능 설명은 서비스에표시
     /*
      * 2005.04.03
      * Login 기능
@@ -36,14 +38,10 @@ public class MemberController {
     ){
 
         LoginResponseDto responseDto = memberService.login(dto.getEmail(), dto.getPassword());
-        if(responseDto.getId() ==null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error");
-        }
         //세션
         HttpSession session = request.getSession();
 
         // session.setAttribute(Const.LOGIN_USER, String.valueOf(responseDto));
-
         session.setAttribute(Const.LOGIN_USER, responseDto);
         return ResponseEntity.ok(new LoginResponseDto(responseDto.getId() ));
     }
