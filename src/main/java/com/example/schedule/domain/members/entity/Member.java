@@ -1,8 +1,12 @@
 package com.example.schedule.domain.members.entity;
 
 import com.example.schedule.domain.schedule.entity.BaseEntity;
+import com.example.schedule.domain.schedule.entity.Schedule;
 import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -20,6 +24,9 @@ public class Member extends BaseEntity {
     //유저 아이디
     @Column(nullable = false)
     private String userName;
+
+    @OneToMany(mappedBy = "member")
+    private List<Schedule> scheduleList =new ArrayList<>();
 
     public Member(String password, String email) {
         this.password = password;
