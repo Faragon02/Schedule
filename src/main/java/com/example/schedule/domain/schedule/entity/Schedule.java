@@ -22,8 +22,9 @@ public class Schedule extends BaseEntity {
     @Column(nullable = false)
     private  String writer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_email")
+    @ManyToOne
+    //@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     //빈 객체가 생성해야하는 이유???
