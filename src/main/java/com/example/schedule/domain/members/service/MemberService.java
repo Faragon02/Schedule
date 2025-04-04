@@ -1,16 +1,15 @@
 package com.example.schedule.domain.members.service;
 
 import com.example.schedule.common.Const;
+import com.example.schedule.common.StateReseponseDto;
 import com.example.schedule.config.PasswordEncoder;
 import com.example.schedule.domain.members.dto.GetResponseDto;
 import com.example.schedule.domain.members.dto.login.LoginResponseDto;
-import com.example.schedule.domain.members.dto.sign.SignUpResponseDto;
 import com.example.schedule.domain.members.entity.Member;
 import com.example.schedule.domain.members.repository.MemberRepository;
 import com.example.schedule.exception.BadCredentialsException;
 import com.example.schedule.exception.NotAuthenticatedException;
 import com.example.schedule.exception.PasswordMismatchException;
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
@@ -69,7 +68,7 @@ public class MemberService {
      *   2.이미 가입된 정보입니다.
      *
      * */
-    public SignUpResponseDto memberSignUpService( String userName, String password, String email){
+    public StateReseponseDto memberSignUpService(String userName, String password, String email){
 
        Member member = new Member(userName,passwordEncoder.encode(password), email);
         //email을 가지는 유저가 있는지 확인(중복 불가)
@@ -77,7 +76,7 @@ public class MemberService {
             throw new DuplicateKeyException("이미 가입된 정보입니다.");
         }
         Member saveMember =memberRepository.save(member);
-        return new SignUpResponseDto(saveMember.getId(), saveMember.getUserName());
+        return new StateReseponseDto("로그인 되었습니다!");
     }
 
     /*

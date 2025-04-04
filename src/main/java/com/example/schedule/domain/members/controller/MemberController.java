@@ -1,13 +1,12 @@
 package com.example.schedule.domain.members.controller;
 
 import com.example.schedule.common.Const;
-import com.example.schedule.config.PasswordEncoder;
 import com.example.schedule.domain.members.dto.GetResponseDto;
 import com.example.schedule.domain.members.dto.login.LoginRequestDto;
 import com.example.schedule.domain.members.dto.login.LoginResponseDto;
 import com.example.schedule.domain.members.dto.sign.SignUpRequestDto;
-import com.example.schedule.domain.members.dto.sign.SignUpResponseDto;
 import com.example.schedule.domain.members.dto.UpdatePasswordRequestDto;
+import com.example.schedule.domain.members.dto.sign.SignUpResponseDto;
 import com.example.schedule.domain.members.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -17,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @Validated
 @RestController
@@ -67,7 +65,7 @@ public class MemberController {
      * 유저 추가
      *  */
     @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDto> memberSignUp( @RequestBody @Valid SignUpRequestDto dto){
+    public ResponseEntity<SignUpResponseDto> memberSignUp(@RequestBody @Valid SignUpRequestDto dto){
 
         SignUpResponseDto signUpResponseDto =
                 memberService.memberSignUpService(
