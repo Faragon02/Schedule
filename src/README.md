@@ -1,13 +1,10 @@
 # What for This?
 
 # Schedule API
-![img_1.png](img_1.png)
 
 # User API
-![img_2.png](img_2.png)
 
 # ERD
-![img_4.png](img_4.png)
 # DB
   * ScheduleDB
 
